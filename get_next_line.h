@@ -17,4 +17,6 @@
 # include <unistd.h>
 // # include "libft.a"
 
+int get_next_line(const int fd, char **line);
+
 #endif

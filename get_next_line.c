@@ -13,9 +13,10 @@
 // 10420
 
 #include "get_next_line.h"
-#include "../../libft/verif/libft.h"
+#include "libft.h"
 #include <unistd.h>
 #include <fcntl.h>
+
 
 #define BUFF_SIZE 5
 
@@ -30,6 +31,12 @@ int get_next_line(const int fd, char **line)
 	int i = 0;
 	int j;
 
+	if (rest != NULL)
+		while (rest[i])
+		{
+			result[i] = rest[i];
+			i++;
+		}
 
 	// temp = 
 	while (read(fd, &buf, BUFF_SIZE) != 0)
@@ -44,7 +51,7 @@ int get_next_line(const int fd, char **line)
 				result[i++] = buf[j++];
 			result[i] = '\0';
 			*line = result;
-			rest = ft_strsub(buf, j, ft_strlen(buf) - j);
+			rest = ft_strsub(buf, j + 1, ft_strlen(buf) - j);
 			return (1);
 			// printf("new line%d\n", idebug++);
 		}
@@ -59,21 +66,21 @@ int get_next_line(const int fd, char **line)
 	return (0);
 }
 
-int		main(void)
-{
-	int		fd;
-	char	*line;
+// int		main(void)
+// {
+// 	int		fd;
+// 	char	*line;
 
-	fd = open("../poeme.txt", O_RDONLY);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
-	return (0);
-}
+// 	fd = open("../poeme.txt", O_RDONLY);
+// 	get_next_line(fd, &line);
+// 	printf("%s\n", line);
+// 	get_next_line(fd, &line);
+// 	printf("%s\n", line);
+// 	get_next_line(fd, &line);
+// 	printf("%s\n", line);
+// 	get_next_line(fd, &line);
+// 	printf("%s\n", line);
+// 	get_next_line(fd, &line);
+// 	printf("%s\n", line);
+// 	return (0);
+// }
