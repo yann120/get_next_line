@@ -11,31 +11,48 @@
 /* ************************************************************************** */
 
 // 10420
-
+// probleme a resoudre : faire en sorte que le rest lu soit effacé et remis a zero. il doit rester que ce qui n'a pas été lu du reste apres le \n.
 #include "get_next_line.h"
 #include "libft/libft.h"
 #include <unistd.h>
 #include <fcntl.h>
 
-
-#define BUFF_SIZE 5
+char	*ft_strichr(const char *s, int c, int i)
+{
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (&((char *)s)[i]);
+		i++;
+	}
+	if (s[i] == c)
+		return (&((char *)s)[i]);
+	return (NULL);
+}
 
 int get_next_line(const int fd, char **line)
 {
 	char	buf[BUFF_SIZE + 1];
-	// char	**headtemp;
+	char	*temp;
 	// char	*head;
 	// int idebug = 0;
 	static char *rest;
 	char result[10420];
 	int i = 0;
 	int j;
-
-	if (rest != NULL)
-		while (rest[i])
+	ft_strclr(*line);
+	// printf("rest = %s\n", rest);
+	if (rest != NULL && read(fd, &buf, BUFF_SIZE) == 0)
+		while (rest[i] && rest[i] != '\n')
 		{
 			result[i] = rest[i];
 			i++;
+
+		}
+		j = 0;
+		while (i >= 0)
+		{
+			rest[j] = rest[i] 
 		}
 
 	// temp = 
@@ -45,6 +62,7 @@ int get_next_line(const int fd, char **line)
 		buf[BUFF_SIZE] = '\0';
 		// ft_putstr(buf);
 		// printf("\n");
+		// printf("buf=%s\n", buf);
 		if (ft_strchr(buf, '\n'))
 		{
 			while (buf[j] != '\n')
@@ -95,7 +113,10 @@ int main(void)
 
 	// fd = open("../poeme.txt", O_RDONLY);
 	fd = open("../1line.txt", O_RDONLY);
-	get_next_line(fd, &line);
-	printf("%s\n", line);
+	while(i++ < 3)
+	{
+		get_next_line(fd, &line);
+		printf("%s\n", line);
+	}
 	return 0;
 }
