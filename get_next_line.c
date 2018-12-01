@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ypetitje <ypetitje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 09:50:09 by ypetitje          #+#    #+#             */
-/*   Updated: 2018/11/26 11:41:34 by ypetitje         ###   ########.fr       */
+/*   Updated: 2018/12/01 11:49:04 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // 10420
 
 #include "get_next_line.h"
-#include "libft.h"
+#include "libft/libft.h"
 #include <unistd.h>
 #include <fcntl.h>
 
@@ -68,19 +68,34 @@ int get_next_line(const int fd, char **line)
 
 // int		main(void)
 // {
+// 	char 	*line;
+// 	int		out;
+// 	int		p[2];
 // 	int		fd;
-// 	char	*line;
 
-// 	fd = open("../poeme.txt", O_RDONLY);
-// 	get_next_line(fd, &line);
+// 	out = dup(1);
+// 	pipe(p);
+
+// 	fd = 1;
+// 	dup2(p[1], fd);
+// 	write(fd, "efghijkl", 8);
+// 	close(p[1]);
+// 	dup2(out, fd);
+// 	get_next_line(p[0], &line);
 // 	printf("%s\n", line);
-// 	get_next_line(fd, &line);
-// 	printf("%s\n", line);
-// 	get_next_line(fd, &line);
-// 	printf("%s\n", line);
-// 	get_next_line(fd, &line);
-// 	printf("%s\n", line);
-// 	get_next_line(fd, &line);
-// 	printf("%s\n", line);
+// 	printf("%d\n", ft_strcmp(line, "efghijkl"));
 // 	return (0);
 // }
+
+int main(void)
+{
+	int		fd;
+	char	*line;
+	int		i = 0;
+
+	// fd = open("../poeme.txt", O_RDONLY);
+	fd = open("../1line.txt", O_RDONLY);
+	get_next_line(fd, &line);
+	printf("%s\n", line);
+	return 0;
+}
