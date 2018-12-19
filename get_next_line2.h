@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line2.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/26 09:50:09 by ypetitje          #+#    #+#             */
-/*   Updated: 2018/12/17 14:29:14 by yann             ###   ########.fr       */
+/*   Created: 2018/12/17 09:31:31 by yann              #+#    #+#             */
+/*   Updated: 2018/12/17 09:32:46 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 80
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "libft.h"
+#ifndef GET_NEXT_LINE_2_H
+# define GET_NEXT_LINE_2_H
+# define BUFF_SIZE 1
 
-int get_next_line(const int fd, char **line);
+# include "fcntl.h"
+# include "sys/types.h"
+# include "sys/uio.h"
+# include "unistd.h"
+# include "stdlib.h"
+# include "libft.h"
 
 #endif
