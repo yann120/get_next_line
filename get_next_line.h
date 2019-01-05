@@ -13,11 +13,13 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # define BUFF_SIZE 10
+#define ENDL '\n'
 # include <stdio.h>
 # include <stdlib.h>
 # include "libft/includes/libft.h"
 #include <unistd.h>
 #include <fcntl.h>
+#include <limits.h>
 
 int get_next_line(const int fd, char **line);
 int	return_good_line(char *result, int *position, char **line);

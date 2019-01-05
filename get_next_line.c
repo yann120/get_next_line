@@ -3,97 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ypetitje <ypetitje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yann <yann@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 15:25:38 by yann              #+#    #+#             */
-/*   Updated: 2018/12/21 15:04:28 by ypetitje         ###   ########.fr       */
+/*   Updated: 2018/12/25 10:56:41 by yann             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// seg
-
 #include "get_next_line.h"
 
-int	return_good_line(char *result, int *position, char **line)
+int	ft_read (char **result, int fd)
 {
-	int start;
+	int		returnvalue;
+	char buf[BUFF_SIZE + 1];
+	char	*temp;
 
-	start = *position;
-	// printf("start %d\n", start);
-	while (result[*position] != '\0')
-	{
-		if (result[*position] == '\n')
-		{
-			*line = ft_strsub(result, start, *position - start);
-			// printf("%s\n", *line);
-			(*position)++;
-			// printf("lA\n");		
-			return(1);	
-		}
-		(*position)++;
-		// printf("position %d\n", *position);
-	}
-	if (result[*position] == '\0')
-		*line = ft_strsub(result, start, *position - start);
-	if (start < *position)
-	{
-		*position = -123;	
-		return(1);
-	}
-	*position = -123;
-		// printf("lA\n");		
-	return(0);
+	if ((returnvalue = read(fd, buf, BUFF_SIZE)) < 0)
+		return (-1);
+	buf[returnvalue] = 0;
+	temp = *result;
+	*result = ft_strjoin(*result, buf);
+	if (*temp != 0)
+		free(temp);
+	return (returnvalue);
 }
 
-int		get_next_line(const int fd, char **line)
+int ft_return_good_line(char **result, char *temp, char **line)
 {
-	static	char		*result;
-	char				buf[BUFF_SIZE + 1];
-	char				*temp;
-	int					returnvalue;
-	static	int			position = 0;
+	char *join;
+	int i;
 
-	//copie l'integralite dans result
-	if (line == NULL || fd < 0)
-		return (-1);
-	
-	// printf("fd = %zd/n", fd);
-	// printf("ret = %zd/n", read(fd, buf, BUFF_SIZE));
-	// printf("%zd\n",read(fd, buf, BUFF_SIZE));
-	while ((returnvalue = read(fd, buf, BUFF_SIZE)) > 0)
-	{	
-		if (returnvalue == 0)
-			return (0);
-		buf[returnvalue]  = '\0';
-		if (result == NULL)
-			result = ft_strnew(1);
-		temp = ft_strjoin(result, buf);
-		ft_strdel(&result);
-		result = temp;
-		if (ft_strchr(buf, '\n') && ft_strchr(buf, '\0'))
-			return(return_good_line(result, &position, line));
+	i = 0;
+	if (*temp == '\n')
+		i = 1;
+	*temp = 0;
+	*line = ft_strjoin("", *result);
+	if (i == 0 && ft_strlen(*result) != 0)
+	{
+		*result = ft_strnew(1);
+		return (1);
 	}
-	// printf("lA\n");
-	if (returnvalue < 0)
-		return (-1);
-	//ajoutè position == 0 pour ne pas que ca segfault quand on envoi un fichier vide avec return = 0. mais ca fait foirrer 2 test basic test de 8 ligne sans \n
-	else if (returnvalue == 0 && (position == -123 || position == 0))
+	else if (i == 0 && !(ft_strlen(*result)))
+	{
 		return (0);
-	return(return_good_line(result, &position, line)); 
+	}
+	join = *result;
+	*result = ft_strjoin(temp + 1, "");
+	free(join);
+	return (i);
 }
 
-// int main(void)
-// {
-// 	int		fd;
-// 	char	*line;
-// 	int		i = 0;
+	int get_next_line(int const fd, char **line)
+{
+	int				returnvalue;
+	static char 	*result;
+	char			*temp;
 
-// 	// fd = open("../poeme.txt", O_RDONLY);
-// 	fd = open("gnl-sample/m83.txt", O_RDONLY);
-// 	while(i++ < 9)
-// 	{
-// 		get_next_line(fd, &line);
-// 		printf("%s\n", line);
-// 	}
-// 	return 0;
-// }
+// ordre a verifier entre 2 conditions result et line
+	if (result == NULL)
+		result = ft_strnew(1);
+	if (line == NULL || BUFF_SIZE < 1)
+		return (-1);
+	returnvalue = BUFF_SIZE;
+	while (line != NULL)
+	{
+		temp = result;
+		while (*temp || returnvalue < BUFF_SIZE)
+		{
+			if (*temp == '\n' || *temp == 0)
+				return (ft_return_good_line(&result, temp, line));
+			temp++;
+		}
+		returnvalue = ft_read(&result, fd);
+		if (returnvalue == -1)
+			return (-1);
+	}
+	return (0);
+}
