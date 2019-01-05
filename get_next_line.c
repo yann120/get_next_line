@@ -6,7 +6,7 @@
 /*   By: ypetitje <ypetitje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 15:25:38 by yann              #+#    #+#             */
-/*   Updated: 2019/01/05 17:53:46 by ypetitje         ###   ########.fr       */
+/*   Updated: 2019/01/05 18:03:49 by ypetitje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ int get_next_line(int const fd, char **line)
 			temp++;
 		}
 		if ((returnvalue = ft_read(&result, fd)) < 0)
-		{
-			free(result);
 			return (-1);
-		}
 	}
 	return (0);
 }
