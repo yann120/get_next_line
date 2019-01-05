@@ -12,10 +12,10 @@
 
 #include "get_next_line.h"
 
-int	ft_read (char **result, int fd)
+int	ft_read(char **result, int fd)
 {
 	int		returnvalue;
-	char buf[BUFF_SIZE + 1];
+	char 	buf[BUFF_SIZE + 1];
 	char	*temp;
 
 	if ((returnvalue = read(fd, buf, BUFF_SIZE)) < 0)
@@ -30,30 +30,29 @@ int	ft_read (char **result, int fd)
 
 int ft_return_good_line(char **result, char *temp, char **line)
 {
-	char *join;
-	int i;
+	int returnvalue;
 
-	i = 0;
 	if (*temp == '\n')
-		i = 1;
+		returnvalue = 1;
+	else
+		returnvalue = 0;
 	*temp = 0;
 	*line = ft_strjoin("", *result);
-	if (i == 0 && ft_strlen(*result) != 0)
+	if (returnvalue == 0 && ft_strlen(*result) != 0)
 	{
 		*result = ft_strnew(1);
 		return (1);
 	}
-	else if (i == 0 && !(ft_strlen(*result)))
-	{
+	else if (returnvalue == 0 && !(ft_strlen(*result)))
 		return (0);
-	}
-	join = *result;
+	// *result = temp + 1;
+	printf("avant = \"%s\"\n", *result);
 	*result = ft_strjoin(temp + 1, "");
-	free(join);
-	return (i);
+	printf("apres \"%s\"\n", *result);
+	return (returnvalue);
 }
 
-	int get_next_line(int const fd, char **line)
+int get_next_line(int const fd, char **line)
 {
 	int				returnvalue;
 	static char 	*result;
