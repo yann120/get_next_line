@@ -6,7 +6,7 @@
 /*   By: ypetitje <ypetitje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 15:25:38 by yann              #+#    #+#             */
-/*   Updated: 2019/01/05 18:32:12 by ypetitje         ###   ########.fr       */
+/*   Updated: 2019/01/05 18:38:55 by ypetitje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_read(char **result, int fd)
 {
 	int		returnvalue;
-	char 	buf[BUFF_SIZE + 1];
+	char	buf[BUFF_SIZE + 1];
 	char	*temp;
 
 	if ((returnvalue = read(fd, buf, BUFF_SIZE)) < 0)
@@ -27,10 +27,10 @@ int	ft_read(char **result, int fd)
 	return (returnvalue);
 }
 
-int ft_return_good_line(char **result, char *temp, char **line, int fd)
+int	ft_return_good_line(char **result, char *temp, char **line, int fd)
 {
-	int returnvalue;
-	char *tofree;
+	int		returnvalue;
+	char	*tofree;
 
 	if (*temp == '\n')
 		returnvalue = 1;
@@ -51,10 +51,10 @@ int ft_return_good_line(char **result, char *temp, char **line, int fd)
 	return (returnvalue);
 }
 
-int get_next_line(int const fd, char **line)
+int	get_next_line(int const fd, char **line)
 {
 	int				returnvalue;
-	static char 	*result[1000];
+	static char		*result[1000];
 	char			*temp;
 
 	if (fd < 0 || line == NULL || BUFF_SIZE < 1)
